@@ -267,7 +267,6 @@ public class Raytracer {
 
     }
     public void rayCast2(Ray r, Model obj) {
-        Vector3D totalLight = new Vector3D(0, 0, 0);
         // All the faces for this object
         ArrayList<String> faces = obj.getFaces();
         // Arbitrary large T-value to start when getting min
