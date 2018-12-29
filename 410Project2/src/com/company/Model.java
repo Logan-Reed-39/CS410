@@ -19,12 +19,14 @@ public class Model {
 
     private static DecimalFormat df2 = new DecimalFormat(".##");
     private String identify;
+    private String soothing;
     private Vector3D rotation;
     private double theta;
     private double scale;
     private double[] translation = new double[3];
     private Vector3D KaMaterial;
     private Vector3D KdMaterial;
+    private Vector3D KsMaterial;
     private String ModelObjName;
     private ArrayList<String> vertices = new ArrayList<>();
     private ArrayList<Vector3D> vertexNormals = new ArrayList<>();
@@ -33,6 +35,9 @@ public class Model {
     private ArrayList<String> modelFileContents = new ArrayList<>();
     private RealMatrix pixels;
     private ArrayList<Vector3D> transformedPoints = new ArrayList<>();
+    private double phongConstant = 0.0;
+    private Vector3D attentuationCoef = new Vector3D(1,1,1);
+
 
     public ArrayList<Vector3D> getTransformedPoints() { return transformedPoints; }
     public void setTransformedPoints(ArrayList<Vector3D> transformedPoints) { this.transformedPoints = transformedPoints; }
@@ -44,7 +49,15 @@ public class Model {
     public double[] getTranslation() { return translation; }
     public Vector3D getKaMaterial() { return KaMaterial; }
     public Vector3D getKdMaterial() { return KdMaterial; }
+    public Vector3D getKsMaterial() { return KsMaterial; }
     public String getModelObjName() { return ModelObjName; }
+    public double getPhongConstant() { return phongConstant;}
+
+    public String getSoothing() { return soothing; }
+    public void setSoothing(String e) { this.soothing = e;}
+
+    public Vector3D getAttentuationCoef() { return attentuationCoef;}
+    public void setAttentuationCoef(Vector3D e) { this.attentuationCoef = e;}
 
     public ArrayList<String> getFaces() { return faces;}
     public ArrayList<String> getModelFileContents() { return modelFileContents; }
@@ -56,8 +69,10 @@ public class Model {
     public void setTranslation(double[] translation1) { this.translation = translation1; }
     public void setKaMaterial(Vector3D translation1) { this.KaMaterial = translation1; }
     public void setKdMaterial(Vector3D translation1) { this.KdMaterial= translation1; }
+    public void setKsMaterial(Vector3D translation1) { this.KsMaterial= translation1; }
     public void setModelObjName(String modelObj1) { this.ModelObjName = modelObj1; }
     public void setVertices(ArrayList<String> e) { this.vertices = e; }
+    public void setPhongConstant(Double e) { this.phongConstant = e;}
 
 
 
@@ -151,6 +166,22 @@ public class Model {
                     material[1] = Double.parseDouble(lineParts[1]);
                     material[2] = Double.parseDouble(lineParts[2]);
                     this.setKdMaterial(new Vector3D(material));
+                }
+                else if(line.startsWith("Ks"))
+                {
+                    line = line.substring(3);
+                    String[] lineParts = line.split(" ");
+                    double[] material = new double[3];
+                    material[0] = Double.parseDouble(lineParts[0]);
+                    material[1] = Double.parseDouble(lineParts[1]);
+                    material[2] = Double.parseDouble(lineParts[2]);
+                    this.setKsMaterial(new Vector3D(material));
+                }
+                else if(line.startsWith("Ns"))
+                {
+                    line = line.substring(3);
+                    String[] lineParts = line.split(" ");
+                    this.setPhongConstant(Double.parseDouble(lineParts[0]));
                 }
             }
             input.close();
@@ -276,19 +307,7 @@ public class Model {
 
         return m;
     }
-    public ArrayList<Vector3D> transformVertexNormals(ArrayList<String> faces, ArrayList<Vector3D> vertices)
-    {
-        ArrayList<Vector3D> vertexNormals2 = new ArrayList<>();
-        for(String s: faces)
-        {
-            ArrayList<Vector3D> triangle = getTriangleVectors(faces, vertices);
-            Vector3D V1 = triangle.get(0).subtract(triangle.get(1));
-            Vector3D V2 = triangle.get(1).subtract(triangle.get(2));
-            Vector3D newNormal = V1.crossProduct(V2);
-            vertexNormals2.add(newNormal);
-        }
-        return vertexNormals2;
-    }
+
 
     public ArrayList<Vector3D> getSingleTriangleVectors(String face, ArrayList<Vector3D> vertices)
     {

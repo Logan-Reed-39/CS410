@@ -1,0 +1,10 @@
+eye 0 0 100
+look 0 0 0
+up 0 1 0
+d 30
+bounds -2 -2 2 2
+res 256 256
+ambient 0.2 0.2 0.2
+light 10 10 100 1 0.0 0.5 0.5
+light -10 -10 10 1 0.0 0.5 0.0
+model 0.0 1.0 0.0 90 2 0.0 0.0 -15.0 cylinder.obj
