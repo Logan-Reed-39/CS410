@@ -48,7 +48,7 @@ Here is a brief explanation of the contents of the driver file:
 **sphere**: There can be 0 or more spheres in the scene. The first three numbers represent the sphere's x,y, and z location. The fourth value is the radius of the sphere. All the next values are triplets representing the color of the sphere with specific material properties. The first triplet is the red, green, and blue ambient coefficients, the next triplet is diffuse, and the next is specular. The next triplet is the amount of reflection of the sphere, in other words how much reflection is shown on that sphere (0 is no reflection 1 is complete reflection). The next triplet is the amount of refraction for that sphere, in other words how much light is allowed to pass through it (0 means all light passes through, 1 means no light). The last number is the index of refraction for the material, in other words how much the light bends when passing through the sphere. 1.0 typically represents air and 1.5 represents glass.
 
 
-I hope you are able to make some pretty cool images with this program like I have, and it was a great project for me to learn the combined power of Java and linear algebra! 
+All of the source files for this program are located in src/com/company. I hope you are able to make some pretty cool images with this program like I have, and it was a great project for me to learn the combined power of Java and linear algebra! 
 
 
 
